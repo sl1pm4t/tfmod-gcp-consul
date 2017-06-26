@@ -66,3 +66,15 @@ resource "google_compute_firewall" "consul_ingress" {
     source_tags = ["${var.tag_name}"]
     target_tags = ["${var.tag_name}"]
 }
+
+
+resource "google_dns_record_set" "consul_a_record" {
+  count = "${var.dns_zone != "" ? 1 : 0}"
+  name = "consul.${var.dns_domain}."
+  type = "A"
+  ttl  = 30
+
+  managed_zone = "${var.dns_zone}"
+
+  rrdatas = ["${element(google_compute_instance.consul.*.network_interface.0.access_config.0.assigned_nat_ip, count.index)}"]
+}

@@ -70,3 +70,13 @@ variable "tag_name" {
     default     = "consul"
     description = "Name tag for the servers"
 }
+
+variable "dns_zone" {
+    default     = ""
+    description = "The Google DNS Zone name"
+}
+
+variable "dns_domain" {
+    default     = ""
+    description = "The Google DNS Zone name"
+}
